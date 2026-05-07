@@ -1,0 +1,22 @@
+name: jarvis_pantheon
+description: JARVIS — Pantheon Edition. Powered by Ollama.
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  http: ^1.2.0
+  speech_to_text: ^6.6.0
+  flutter_tts: ^3.8.5
+  url_launcher: ^6.2.4
+  android_intent_plus: ^4.0.2
+  intl: ^0.18.1
+  audioplayers: ^5.2.1
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/sounds/

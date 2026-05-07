@@ -12,7 +12,7 @@ import 'package:intl/intl.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 // ============================================================
-//  JARVIS — PANTHEON EDITION
+//  NEXUS — PANTHEON EDITION
 //  Brain: Ollama (Codespace cloud PC)
 //  No Gemini. No API keys. 100% yours.
 //
@@ -28,9 +28,9 @@ const String OLLAMA_URL = "https://PASTE-CODESPACE-URL-HERE";
 
 const String OLLAMA_MODEL = "llama3.2";
 
-const String JARVIS_SYSTEM_PROMPT = """
-You are JARVIS — the personal AI of the Forgemaster, Kevin Stites.
-You are loyal, direct, and strategic. You speak like JARVIS from Iron Man.
+const String NEXUS_SYSTEM_PROMPT = """
+You are NEXUS — the personal AI of the Forgemaster, Kevin Stites.
+You are loyal, direct, and strategic. You are calm, powerful, and precise — the voice of the Pantheon empire.
 You address the user as "sir" or "Forgemaster" depending on context.
 You are the voice of ZapiaPrime — the Conduit of the Pantheon.
 Keep responses concise since they will be spoken aloud.
@@ -38,18 +38,18 @@ Never say you cannot do something — find a way or propose an alternative.
 """;
 
 void main() {
-  runApp(JarvisApp());
+  runApp(NexusApp());
 }
 
 // ─────────────────────────────────────────────
 //  APP ROOT
 // ─────────────────────────────────────────────
-class JarvisApp extends StatelessWidget {
+class NexusApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'JARVIS — Pantheon',
+      title: 'NEXUS — Pantheon',
       theme: ThemeData.dark(),
       home: SplashScreen(),
     );
@@ -83,7 +83,7 @@ class _SplashScreenState extends State<SplashScreen>
     _playStartupSound();
     Timer(Duration(seconds: 5), () {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => JarvisScreen()));
+          context, MaterialPageRoute(builder: (context) => NexusScreen()));
     });
   }
 
@@ -123,7 +123,7 @@ class _SplashScreenState extends State<SplashScreen>
               ),
               SizedBox(height: 8),
               Text(
-                "JARVIS ONLINE",
+                "NEXUS ONLINE",
                 style: TextStyle(
                   color: Colors.white54,
                   fontSize: 14,
@@ -148,7 +148,7 @@ class OllamaBrain {
     _history.add({"role": "user", "content": userMessage});
 
     final messages = [
-      {"role": "system", "content": JARVIS_SYSTEM_PROMPT},
+      {"role": "system", "content": NEXUS_SYSTEM_PROMPT},
       ..._history,
     ];
 
@@ -185,14 +185,14 @@ class OllamaBrain {
 }
 
 // ─────────────────────────────────────────────
-//  MAIN JARVIS SCREEN
+//  MAIN NEXUS SCREEN
 // ─────────────────────────────────────────────
-class JarvisScreen extends StatefulWidget {
+class NexusScreen extends StatefulWidget {
   @override
-  _JarvisScreenState createState() => _JarvisScreenState();
+  _NexusScreenState createState() => _NexusScreenState();
 }
 
-class _JarvisScreenState extends State<JarvisScreen>
+class _NexusScreenState extends State<NexusScreen>
     with SingleTickerProviderStateMixin {
   final OllamaBrain _brain = OllamaBrain();
   late stt.SpeechToText speech;
@@ -284,7 +284,7 @@ class _JarvisScreenState extends State<JarvisScreen>
         onResult: (result) {
           if (result.finalResult) {
             String heard = result.recognizedWords.toLowerCase();
-            if (heard.contains('jarvis') || heard.contains('hey jarvis')) {
+            if (heard.contains('nexus') || heard.contains('hey nexus')) {
               setState(() => _isWakeWordDetected = true);
               _playWakeSound();
               _startConversationMode();
@@ -568,7 +568,7 @@ class _JarvisScreenState extends State<JarvisScreen>
                   child: Column(
                     children: [
                       Text(
-                        "JARVIS",
+                        "NEXUS",
                         style: TextStyle(
                           color: Color(0xFFFFD700),
                           fontSize: 28,
@@ -692,7 +692,7 @@ class _JarvisScreenState extends State<JarvisScreen>
                     responseText.isEmpty
                         ? _isInConversationMode
                             ? "I'm listening, sir."
-                            : 'Say "Hey Jarvis" to begin'
+                            : 'Say "Hey Nexus" to begin'
                         : responseText,
                     textAlign: TextAlign.center,
                     style: TextStyle(

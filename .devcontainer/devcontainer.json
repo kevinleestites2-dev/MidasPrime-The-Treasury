@@ -1,0 +1,37 @@
+{
+  "name": "Pantheon Nexus",
+  "image": "mcr.microsoft.com/devcontainers/python:3.11",
+
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/node:1": {}
+  },
+
+  "forwardPorts": [8486, 11434, 8080, 3000],
+
+  "postCreateCommand": "pip install -q -r requirements.txt && chmod +x codespace_launch.sh && echo '🔱 Pantheon environment ready. Run: ./codespace_launch.sh'",
+
+  "remoteEnv": {
+    "PANTHEON_DIR": "${containerWorkspaceFolder}"
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.debugpy",
+        "eamodio.gitlens"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "editor.fontSize": 14
+      }
+    }
+  },
+
+  "hostRequirements": {
+    "cpus": 4,
+    "memory": "8gb",
+    "storage": "32gb"
+  }
+}

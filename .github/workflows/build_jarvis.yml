@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'jarvis/**'
+      - '.github/workflows/build_jarvis.yml'
   workflow_dispatch:
 
 jobs:
@@ -11,17 +12,32 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.19.0'
+          flutter-version: '3.22.0'
+          channel: 'stable'
+
+      - name: Scaffold Flutter project
+        run: |
+          flutter create --org com.pantheon --project-name jarvis_pantheon jarvis_scaffold
+          # Overlay our custom files
+          cp jarvis/lib/main.dart jarvis_scaffold/lib/main.dart
+          cp jarvis/pubspec.yaml jarvis_scaffold/pubspec.yaml
+          # Replace working directory
+          mv jarvis_scaffold jarvis_built
+
       - name: Install dependencies
-        working-directory: jarvis
+        working-directory: jarvis_built
         run: flutter pub get
+
       - name: Build APK
-        working-directory: jarvis
+        working-directory: jarvis_built
         run: flutter build apk --release
+
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: JARVIS-Pantheon-APK
-          path: jarvis/build/app/outputs/flutter-apk/app-release.apk
+          path: jarvis_built/build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 7

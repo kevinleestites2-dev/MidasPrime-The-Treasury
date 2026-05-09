@@ -12,7 +12,6 @@ dependencies:
   speech_to_text: ^6.6.0
   flutter_tts: ^3.8.5
   url_launcher: ^6.2.4
-  android_intent_plus: ^4.0.2
   intl: ^0.18.1
   audioplayers: ^5.2.1
 

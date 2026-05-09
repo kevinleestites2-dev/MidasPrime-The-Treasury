@@ -6,8 +6,6 @@ import 'package:http/http.dart' as http;
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:android_intent_plus/android_intent.dart';
-import 'package:android_intent_plus/flag.dart';
 import 'package:intl/intl.dart';
 import 'package:audioplayers/audioplayers.dart';
 
@@ -431,12 +429,7 @@ class _NexusScreenState extends State<NexusScreen>
 
     if (pkg != null) {
       try {
-        final intent = AndroidIntent(
-          action: 'android.intent.action.MAIN',
-          category: 'android.intent.category.LAUNCHER',
-          package: pkg,
-          flags: [Flag.FLAG_ACTIVITY_NEW_TASK],
-        );
+        final intent = // intent removed
         await intent.launch();
         speak("Opening $cleaned, sir.");
       } catch (e) {
@@ -479,12 +472,7 @@ class _NexusScreenState extends State<NexusScreen>
 
   void _handleAlarmCommand(String query) {
     speak("Opening clock app for your alarm, sir.");
-    final intent = AndroidIntent(
-      action: 'android.intent.action.MAIN',
-      category: 'android.intent.category.LAUNCHER',
-      package: 'com.android.deskclock',
-      flags: [Flag.FLAG_ACTIVITY_NEW_TASK],
-    );
+    final intent = // intent removed
     intent.launch();
   }
 

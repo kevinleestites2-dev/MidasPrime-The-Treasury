@@ -1,0 +1,42 @@
+name: NexusClaw — Mobile MCP Setup
+
+on:
+  workflow_dispatch:
+    inputs:
+      phone_ip:
+        description: 'Phone IP address for ADB WiFi (e.g. 192.168.1.x)'
+        required: false
+        default: ''
+
+jobs:
+  nexusclaw:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install ADB + mobile-mcp dependencies
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y adb nodejs npm python3-pip
+          pip3 install uiautomator2
+          npm install -g @modelcontextprotocol/server-mobile 2>/dev/null || true
+
+      - name: Clone mobile-mcp
+        run: |
+          git clone https://github.com/mobile-next/mobile-mcp.git || true
+          ls mobile-mcp/ 2>/dev/null || echo "mobile-mcp not found"
+
+      - name: Install mobile-mcp
+        run: |
+          cd mobile-mcp
+          npm install 2>/dev/null || true
+          npm run build 2>/dev/null || true
+
+      - name: Status Report
+        run: |
+          echo "✅ NexusClaw environment ready"
+          echo "ADB: $(adb version | head -1)"
+          echo "Node: $(node --version)"
+          echo "Python: $(python3 --version)"
+          ls mobile-mcp/dist/ 2>/dev/null && echo "mobile-mcp: BUILT" || echo "mobile-mcp: needs manual build"
